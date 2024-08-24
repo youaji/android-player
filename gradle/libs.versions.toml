@@ -1,0 +1,52 @@
+[versions]
+# build
+compileSdk = "34"
+minSdk = "23"
+targetSdk = "34"
+# plugin
+agp = "8.3.1"
+kotlin = "1.9.20"
+mavenPublish = "0.29.0"
+# test
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+# androidx
+androidxAppcompat = "1.6.1"
+androidxCoreKTX = "1.10.1"
+androidxConstraintlayout = "2.1.4"
+androidxStartupRuntime = "1.0.0"
+# google
+googleMaterial = "1.10.0"
+# youaji
+youajiDebug = "1.0.0"
+youajiUI = "1.0.0"
+youajiUtil = "1.0.0"
+youajiWidget = "1.0.0"
+youajiPlayer = "1.0.0"
+
+[libraries]
+# test
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+# androidx
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKTX" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidxConstraintlayout" }
+androidx-startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "androidxStartupRuntime" }
+# google
+google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
+# youaji
+youaji-debug = { group = "com.youaji.android", name = "libs-debug", version.ref = "youajiDebug" }
+youaji-debug-no-op = { group = "com.youaji.android", name = "libs-debug-no-op", version.ref = "youajiDebug" }
+youaji-ui = { group = "com.youaji.android", name = "libs-ui", version.ref = "youajiUI" }
+youaji-util = { group = "com.youaji.android", name = "libs-util", version.ref = "youajiUtil" }
+youaji-widget = { group = "com.youaji.android", name = "libs-widget", version.ref = "youajiWidget" }
+youaji-player = { group = "com.youaji.android", name = "libs-player", version.ref = "youajiPlayer" }
+
+[plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

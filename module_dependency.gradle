@@ -1,0 +1,117 @@
+def getConfigModuleProperties() {
+    def properties = new Properties()
+    try {
+        File configModulePropertiesFile
+        try {
+            configModulePropertiesFile = new File(rootDir, 'config-module.properties')
+            if (configModulePropertiesFile == null || !configModulePropertiesFile.exists()) {
+                configModulePropertiesFile = new File("../config-module.properties")
+            }
+        } catch (Exception e) {
+            e.printStackTrace()
+            configModulePropertiesFile = new File("../local.properties")
+        }
+        println("│ configModulePropertiesFile: " + configModulePropertiesFile.absolutePath)
+        properties.load(new FileInputStream(configModulePropertiesFile))
+        return properties
+    } catch (Exception e) {
+        e.printStackTrace()
+        return properties
+    }
+}
+
+def moduleApi(String dependencyNotation) {
+    moduleApi(dependencyNotation, {})
+}
+
+def moduleApi(String dependencyNotation, Closure configureClosure) {
+//    println("┌———————————————————————————————————————————————————————————————————————————————")
+    switchSource("api", dependencyNotation, configureClosure)
+//    println("└———————————————————————————————————————————————————————————————————————————————")
+}
+
+def moduleImplementation(String dependencyNotation) {
+    moduleImplementation(dependencyNotation, {})
+}
+
+def moduleImplementation(String dependencyNotation, Closure configureClosure) {
+//    println("┌———————————————————————————————————————————————————————————————————————————————")
+    switchSource("implementation", dependencyNotation, configureClosure)
+//    println("└———————————————————————————————————————————————————————————————————————————————")
+}
+
+def moduleDebugImplementation(String dependencyNotation) {
+    moduleDebugImplementation(dependencyNotation, {})
+}
+
+def moduleDebugImplementation(String dependencyNotation, Closure configureClosure) {
+//    println("┌———————————————————————————————————————————————————————————————————————————————")
+    switchSource("debugImplementation", dependencyNotation, configureClosure)
+//    println("└———————————————————————————————————————————————————————————————————————————————")
+}
+
+def moduleReleaseImplementation(String dependencyNotation) {
+    moduleReleaseImplementation(dependencyNotation, {})
+}
+
+def moduleReleaseImplementation(String dependencyNotation, Closure configureClosure) {
+//    println("┌———————————————————————————————————————————————————————————————————————————————")
+    switchSource("releaseImplementation", dependencyNotation, configureClosure)
+//    println("└———————————————————————————————————————————————————————————————————————————————")
+}
+
+private def switchSource(String configurationName, String dependencyNotationOriginal, Closure configureClosure) {
+    def temp = dependencyNotationOriginal.split(":")
+    def group = temp[0]
+    def artifactId = temp[1]
+    def version = temp[2]
+    def includeModules = getIncludeModules()
+    if (includeModules.contains(artifactId)) {
+        artifactId = addModulePrefix(artifactId)
+        println("[$project.name]->[源码]->[$configurationName project('$artifactId')]")
+        projects.project.dependencies.add(configurationName, project(artifactId), configureClosure)
+    } else {
+        def dependencyNotation = "$group:$artifactId:$version"
+        println("[$project.name]->[仓库]->[$configurationName '$dependencyNotation']")
+        projects.project.dependencies.add(configurationName, dependencyNotation, configureClosure)
+    }
+}
+
+/**
+ * 这是关键
+ * 核心逻辑：项目是否include了module，从而作为依据加载源码还是仓库
+ * 因此：需要切换的module，切勿include，将在切换源码时自动include
+ * @return project中被include过的module
+ */
+private def getIncludeModules() {
+    Set<String> includeModules = new HashSet<>()
+    rootProject.getAllprojects().each {
+        if (it != rootProject)
+            includeModules.add(it.name)
+    }
+    return includeModules
+}
+
+private static def addModulePrefix(String artifactId) {
+    return ":${getModulePrefix(artifactId)}:$artifactId"
+}
+
+private static def getModulePrefix(String artifactId) {
+    def prefix = ""
+    if (artifactId.startsWith("libs-")) {
+        prefix = "library"
+    } else if (artifactId.startsWith("module-")) {
+        prefix = "module"
+    }
+    return prefix
+}
+
+ext {
+    moduleApi = this.&moduleApi
+    moduleImplementation = this.&moduleImplementation
+    moduleDebugImplementation = this.&moduleDebugImplementation
+    moduleReleaseImplementation = this.&moduleReleaseImplementation
+    getModulePrefix = this.&getModulePrefix
+    addModulePrefix = this.&addModulePrefix
+    getConfigModuleProperties = this.&getConfigModuleProperties
+}

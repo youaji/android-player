@@ -1,0 +1,10 @@
+#ifndef FFMPEG4_SCREENSHOTRECORDER_H
+#define FFMPEG4_SCREENSHOTRECORDER_H
+
+
+class ScreenshotRecorder {
+
+};
+
+
+#endif //FFMPEG4_SCREENSHOTRECORDER_H

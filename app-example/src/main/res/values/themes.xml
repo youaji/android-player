@@ -1,0 +1,23 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- 主色调：应用的主要色调,actionBar 默认使用该颜色，Toolbar 导航栏的底色 -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <!-- 主色调的较浅/较暗变体（阴影色），在主题中很少使用 -->
+        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
+        <!-- 用于显示在原色上方的元素的颜色（例如，文本和图标，根据可访问性，通常为白色或半透明的黑色） -->
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <!-- Secondary brand color. -->
+        <!-- 次色调，主要用于强调某些需要突出的小部件 -->
+        <item name="colorSecondary">@color/color_secondary</item>
+        <!-- 次色调的较浅/较深变体（阴影色），在主题中很少使用 -->
+        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
+        <!-- 辅助颜色顶部的元素的颜色 -->
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <!-- 状态栏 -->
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <!--页面背景色-->
+        <item name="android:windowBackground">@color/window_background</item>
+        <!--底部导航栏颜色-->
+        <item name="android:navigationBarColor">@color/navigation_bar</item>
+    </style>
+</resources>

@@ -1,0 +1,45 @@
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }// 阿里云google仓
+        maven { url 'https://maven.aliyun.com/repository/public' }// 阿里云central仓和jcenter仓的聚合仓
+        maven { url "https://jitpack.io" }
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }// 阿里云google仓
+        maven { url 'https://maven.aliyun.com/repository/public' }// 阿里云central仓和jcenter仓的聚合仓
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+        google()
+    }
+}
+
+rootProject.name = "Player"
+include ':app-example'
+
+// 加载切换源码或仓库配置
+apply from: "module_dependency.gradle"
+println("┌———————————————————————————————————————————————————————————————————————————————")
+println("│                      ------ 源码依赖列表------ ")
+getConfigModuleProperties().entrySet().each { entry ->
+    if (Boolean.valueOf(entry.value)) {
+        def keyName = entry.key
+        if (!String.valueOf(keyName).isEmpty()) {
+            def prefix = getModulePrefix(keyName)
+            def prefixDir = prefix.isEmpty() ? "" : "$prefix\\"
+            def moduleName = addModulePrefix(keyName)
+            def file = file("$prefixDir$keyName")
+            if (file.exists()) {
+                include "$moduleName"
+                project("$moduleName").projectDir = file
+                println("│ $keyName -> [$moduleName] -> $file")
+            }
+        }
+    }
+}
+println("└———————————————————————————————————————————————————————————————————————————————")

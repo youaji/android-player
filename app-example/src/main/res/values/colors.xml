@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#FF000000</color>
+    <color name="color_primary_variant">#FF000000</color>
+    <color name="color_on_primary">#FF000000</color>
+    <color name="color_secondary">#FF000000</color>
+    <color name="color_secondary_variant">#FF000000</color>
+    <color name="color_on_secondary">#FF000000</color>
+    <color name="status_bar">#FF000000</color>
+    <color name="window_background">#FFFFFFFF</color>
+    <color name="navigation_bar">#FF000000</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_alpha_50">#80FFFFFF</color>
+    <color name="gray_80">#808080</color>
+
+</resources>
